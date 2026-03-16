@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mavelle — Timeless Jewels</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C; --gold-light: #E8CF7E; --gold-dark: #8B6914;
+    --cream: #F7F0E6; --dark: #0D0B09; --dark2: #1A1612;
+    --dark3: #241F19; --text-muted: #9A8E7E; --white: #FEFCF8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--dark); color: var(--cream); font-family: 'Montserrat', sans-serif; font-weight: 300; overflow-x: hidden; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--dark); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 2px; }
+
+  /* HEADER */
+  header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px 60px; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(to bottom, rgba(13,11,9,0.95), rgba(13,11,9,0)); backdrop-filter: blur(2px); }
+  .logo { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; text-decoration: none; }
+  .logo-text { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 300; letter-spacing: 10px; text-transform: uppercase; line-height: 1; background: linear-gradient(135deg, #C9A84C 0%, #F0DC9A 40%, #C9A84C 60%, #8B6914 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 20px rgba(201,168,76,0.4)); }
+  .logo-tagline { font-size: 9px; letter-spacing: 5px; color: var(--gold); text-transform: uppercase; font-weight: 400; margin-left: 3px; }
+  .logo-divider { width: 100%; height: 1px; background: linear-gradient(to right, var(--gold), transparent); margin-top: 3px; }
+  nav { display: flex; gap: 40px; align-items: center; }
+  nav a { color: var(--text-muted); text-decoration: none; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; transition: color 0.3s; }
+  nav a:hover { color: var(--gold-light); }
+
+  /* HERO */
+  .hero { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background: var(--dark); }
+  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.06) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.04) 0%, transparent 50%), radial-gradient(ellipse at 50% 100%, rgba(139,105,20,0.08) 0%, transparent 50%); }
+  .hero-grid-lines { position: absolute; inset: 0; background-image: linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px); background-size: 60px 60px; }
+  .hero-content { text-align: center; z-index: 2; position: relative; animation: fadeInUp 1.2s ease both; }
+  .hero-overline { font-size: 10px; letter-spacing: 6px; color: var(--gold); text-transform: uppercase; margin-bottom: 24px; }
+  .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(56px, 8vw, 110px); font-weight: 300; line-height: 0.95; letter-spacing: -1px; color: var(--white); margin-bottom: 30px; }
+  .hero-title em { font-style: italic; background: linear-gradient(135deg, #C9A84C, #F0DC9A, #C9A84C); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero-subtitle { font-size: 13px; letter-spacing: 2px; color: var(--text-muted); max-width: 400px; margin: 0 auto 50px; line-height: 1.8; }
+  .hero-cta { display: inline-flex; align-items: center; gap: 12px; padding: 14px 40px; border: 1px solid rgba(201,168,76,0.4); color: var(--gold-light); text-decoration: none; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; transition: all 0.4s; position: relative; overflow: hidden; }
+  .hero-cta::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(201,168,76,0.1), transparent); transform: translateX(-100%); transition: transform 0.4s; }
+  .hero-cta:hover::before { transform: translateX(0); }
+  .hero-cta:hover { border-color: var(--gold); color: var(--gold); }
+  .hero-scroll { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--text-muted); font-size: 9px; letter-spacing: 3px; text-transform: uppercase; animation: bounce 2s infinite; }
+  .hero-scroll::after { content: ''; width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold), transparent); }
+
+  /* FILTER */
+  .filter-bar { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; padding: 0 40px 40px; }
+  .filter-btn { background: none; border: 1px solid rgba(201,168,76,0.15); color: var(--text-muted); font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; padding: 9px 22px; cursor: pointer; transition: all 0.3s; }
+  .filter-btn:hover, .filter-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.06); }
+
+  /* SECTION HEADER */
+  .section-header { text-align: center; padding: 80px 60px 40px; }
+  .section-overline { font-size: 9px; letter-spacing: 5px; color: var(--gold); text-transform: uppercase; margin-bottom: 16px; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 64px); font-weight: 300; color: var(--white); line-height: 1.1; }
+  .section-title em { font-style: italic; color: var(--gold-light); }
+  .section-divider { width: 80px; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); margin: 24px auto 0; }
+
+  /* CATALOG */
+  .catalog { padding: 20px 40px 100px; max-width: 1400px; margin: 0 auto; }
+  .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+
+  /* CARD */
+  .product-card { position: relative; background: var(--dark2); border: 1px solid rgba(201,168,76,0.08); overflow: hidden; cursor: pointer; transition: all 0.5s cubic-bezier(0.23,1,0.32,1); animation: fadeInUp 0.8s ease both; }
+  .product-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-6px); box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 30px rgba(201,168,76,0.06); }
+  .product-img-wrap { position: relative; overflow: hidden; aspect-ratio: 1/1; background: var(--dark3); }
+  .product-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.23,1,0.32,1); filter: brightness(0.9) contrast(1.05); }
+  .product-card:hover .product-img-wrap img { transform: scale(1.06); filter: brightness(1) contrast(1.08); }
+  .product-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,11,9,0.9) 0%, transparent 50%); opacity: 0; transition: opacity 0.4s; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 20px; }
+  .product-card:hover .product-overlay { opacity: 1; }
+  .overlay-btn { padding: 10px 28px; background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.5); color: var(--gold-light); font-size: 9px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; font-family: 'Montserrat', sans-serif; }
+  .overlay-btn:hover { background: rgba(201,168,76,0.25); border-color: var(--gold); }
+  .product-badge { position: absolute; top: 16px; left: 16px; background: var(--gold); color: var(--dark); font-size: 8px; letter-spacing: 2px; text-transform: uppercase; padding: 4px 10px; font-weight: 600; }
+  .product-info { padding: 20px 24px 24px; }
+  .product-category { font-size: 9px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 8px; }
+  .product-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: var(--white); line-height: 1.2; margin-bottom: 10px; }
+  .product-desc { font-size: 11px; color: var(--text-muted); line-height: 1.8; margin-bottom: 16px; }
+  .product-footer { display: flex; align-items: center; justify-content: space-between; }
+  .product-price { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--gold-light); }
+  .product-share-btn { display: flex; align-items: center; gap: 6px; background: none; border: 1px solid rgba(201,168,76,0.2); color: var(--text-muted); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; padding: 7px 14px; cursor: pointer; transition: all 0.3s; font-family: 'Montserrat', sans-serif; }
+  .product-share-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .share-icon { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; }
+
+  /* MARQUEE */
+  .marquee-wrap { overflow: hidden; border-top: 1px solid rgba(201,168,76,0.1); border-bottom: 1px solid rgba(201,168,76,0.1); padding: 16px 0; background: var(--dark2); }
+  .marquee-track { display: flex; gap: 60px; animation: marquee 30s linear infinite; white-space: nowrap; }
+  .marquee-item { font-family: 'Cormorant Garamond', serif; font-size: 14px; font-style: italic; color: var(--gold-dark); letter-spacing: 3px; display: flex; align-items: center; gap: 20px; flex-shrink: 0; }
+  .marquee-dot { width: 4px; height: 4px; background: var(--gold); border-radius: 50%; }
+
+  /* MODAL */
+  .modal-overlay { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s; padding: 20px; }
+  .modal-overlay.active { opacity: 1; pointer-events: all; }
+  .modal { background: var(--dark2); border: 1px solid rgba(201,168,76,0.2); max-width: 580px; width: 100%; padding: 44px; position: relative; transform: translateY(20px); transition: transform 0.4s; max-height: 92vh; overflow-y: auto; }
+  .modal-overlay.active .modal { transform: translateY(0); }
+  .modal-close { position: absolute; top: 18px; right: 20px; background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 22px; line-height: 1; transition: color 0.3s; }
+  .modal-close:hover { color: var(--gold); }
+  .modal-img { width: 100%; margin-bottom: 24px; aspect-ratio: 1/1; object-fit: cover; filter: brightness(0.95); }
+  .modal-overline { font-size: 9px; letter-spacing: 4px; color: var(--gold); text-transform: uppercase; margin-bottom: 8px; }
+  .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 30px; color: var(--white); margin-bottom: 18px; }
+  .modal-divider { height: 1px; background: linear-gradient(to right, var(--gold-dark), transparent); margin-bottom: 24px; }
+  .modal-desc { font-size: 13px; color: var(--text-muted); line-height: 2; margin-bottom: 28px; }
+  .share-section-title { font-size: 10px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 14px; }
+  .share-link-box { display: flex; margin-bottom: 18px; }
+  .share-link-input { flex: 1; background: var(--dark3); border: 1px solid rgba(201,168,76,0.15); border-right: none; color: var(--text-muted); font-family: 'Montserrat', sans-serif; font-size: 11px; padding: 12px 16px; outline: none; }
+  .share-copy-btn { background: var(--gold); border: none; color: var(--dark); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; padding: 12px 20px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 600; transition: background 0.3s; white-space: nowrap; }
+  .share-copy-btn:hover { background: var(--gold-light); }
+  .share-copy-btn.copied { background: #4CAF50; color: white; }
+  .share-platforms { display: flex; gap: 10px; flex-wrap: wrap; }
+  .share-platform-btn { display: flex; align-items: center; gap: 8px; padding: 10px 18px; border: 1px solid rgba(201,168,76,0.15); background: var(--dark3); color: var(--text-muted); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; font-family: 'Montserrat', sans-serif; }
+  .share-platform-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.05); }
+
+  /* TOAST */
+  .toast { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); background: var(--dark2); border: 1px solid var(--gold); color: var(--gold-light); padding: 14px 32px; font-size: 11px; letter-spacing: 2px; z-index: 300; opacity: 0; pointer-events: none; transition: all 0.3s; text-transform: uppercase; white-space: nowrap; }
+  .toast.show { opacity: 1; }
+
+  /* FOOTER */
+  footer { background: var(--dark2); border-top: 1px solid rgba(201,168,76,0.1); padding: 60px; text-align: center; }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 28px; letter-spacing: 8px; background: linear-gradient(135deg, #C9A84C, #F0DC9A, #C9A84C); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 16px; }
+  .footer-text { font-size: 11px; color: var(--text-muted); letter-spacing: 2px; margin-bottom: 30px; line-height: 1.8; }
+  .footer-links { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px; }
+  .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { font-size: 10px; color: rgba(154,142,126,0.4); letter-spacing: 1px; }
+
+  /* ANIMATIONS */
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-8px); } }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) { header { padding: 16px 24px; } nav { display: none; } .catalog { padding: 20px 16px 60px; } .catalog-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; } .modal { padding: 28px 20px; } footer { padding: 40px 24px; } .section-header { padding: 60px 24px 30px; } .filter-bar { padding: 0 16px 30px; } }
+  @media (max-width: 500px) { .catalog-grid { grid-template-columns: 1fr 1fr; gap: 12px; } .product-name { font-size: 17px; } .product-info { padding: 14px 14px 18px; } }
+  @media (max-width: 360px) { .catalog-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="#" class="logo">
+    <span class="logo-text">Mavelle</span>
+    <div class="logo-divider"></div>
+    <span class="logo-tagline">Timeless Jewels</span>
+  </a>
+  <nav>
+    <a href="#catalog">Collection</a>
+    <a href="#about">Story</a>
+    <a href="#">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-content">
+    <p class="hero-overline">✦ New Collection 2025 ✦</p>
+    <h1 class="hero-title">Where Beauty<br>Meets <em>Eternity</em></h1>
+    <p class="hero-subtitle">Handcrafted jewels that tell stories of grace, culture, and timeless elegance.</p>
+    <a href="#catalog" class="hero-cta">Explore the Collection</a>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Handcrafted with Love <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Timeless Elegance <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Heritage Artistry <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Pure Silver &amp; Gold <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Mavelle Jewels <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Crafted for Queens <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Handcrafted with Love <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Timeless Elegance <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Heritage Artistry <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Pure Silver &amp; Gold <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Mavelle Jewels <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Crafted for Queens <span class="marquee-dot"></span></span>
+  </div>
+</div>
+
+<section id="catalog">
+  <div class="section-header">
+    <p class="section-overline">✦ Our Collection ✦</p>
+    <h2 class="section-title">Jewels That <em>Captivate</em></h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterProducts('all',this)">All</button>
+    <button class="filter-btn" onclick="filterProducts('Earrings',this)">Earrings</button>
+    <button class="filter-btn" onclick="filterProducts('Necklace',this)">Necklace</button>
+    <button class="filter-btn" onclick="filterProducts('Bracelet',this)">Bracelets</button>
+    <button class="filter-btn" onclick="filterProducts('Hair Accessory',this)">Hair Accessories</button>
+  </div>
+  <div class="catalog">
+    <div class="catalog-grid" id="productGrid"></div>
+  </div>
+</section>
+
+<footer id="about">
+  <div class="footer-logo">Mavelle</div>
+  <p class="footer-text">Curated jewels for the discerning soul —<br>where every piece tells a story of beauty and tradition.</p>
+  <div class="footer-links">
+    <a href="#">About Us</a>
+    <a href="#">Collections</a>
+    <a href="#">Care Guide</a>
+    <a href="#">Contact</a>
+    <a href="#">Instagram</a>
+  </div>
+  <p class="footer-copy">© 2025 Mavelle Jewels. All rights reserved.</p>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    <img class="modal-img" id="modalImg" src="" alt="">
+    <p class="modal-overline" id="modalCategory"></p>
+    <h2 class="modal-title" id="modalTitle"></h2>
+    <div class="modal-divider"></div>
+    <p class="modal-desc" id="modalDesc"></p>
+    <p class="share-section-title">✦ Share this jewel with us</p>
+    <div class="share-link-box">
+      <input class="share-link-input" id="shareLinkInput" type="text" readonly>
+      <button class="share-copy-btn" id="copyBtn" onclick="copyLink()">Copy Link</button>
+    </div>
+    <div class="share-platforms">
+      <button class="share-platform-btn" onclick="shareVia('whatsapp')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
+      </button>
+      <button class="share-platform-btn" onclick="shareVia('telegram')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        Telegram
+      </button>
+      <button class="share-platform-btn" onclick="shareVia('email')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Email
+      </button>
+      <button class="share-platform-btn" onclick="shareVia('native')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        More
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Link copied!</div>
+
+<script>
+const BASE = "https://raw.githubusercontent.com/Mathesh08-pc/mavelle/main/";
+
+const products = [
+  { id:1,  name:"Floral Wreath Jhumki",         category:"Earrings",       badge:"Bestseller",   img:BASE+"IMG-20260226-WA0000.jpg", desc:"An oxidised silver masterpiece — a delicate wreath of daisies crowns an ornate jhumki bell. Inspired by temple gardens, this piece carries whispers of ancient beauty and artisan pride." },
+  { id:2,  name:"Golden Blossom Pendant",        category:"Necklace",       badge:"New",          img:BASE+"IMG-20260226-WA0001.jpg", desc:"A five-petaled flower pendant with luminous mother-of-pearl inlay, edged with shimmering crystals. Suspended on a delicate gold chain, it glows like morning light on still water." },
+  { id:3,  name:"Lily Petal Studs",              category:"Earrings",       badge:null,           img:BASE+"IMG-20260226-WA0003.jpg", desc:"Bold and sculptural — these large gold flower studs are inspired by the wild lily, each petal textured with brushed gold. For the woman who wears nature as her crown." },
+  { id:4,  name:"Pearl Heart Jacket Earrings",   category:"Earrings",       badge:"Trending",     img:BASE+"IMG-20260226-WA0004.jpg", desc:"A modern romantic — pearl round studs paired with a heart-shaped pearl jacket. Dainty yet statement-making, these earrings whisper love in the most elegant language." },
+  { id:5,  name:"Crimson Heart Hoop Earrings",   category:"Earrings",       badge:null,           img:BASE+"IMG-20260226-WA0014.jpg", desc:"Deep burgundy enamel hearts cradled in polished gold hoops. A bold declaration of passion and style, perfect for evenings when you want your jewelry to speak first." },
+  { id:6,  name:"Mother-of-Pearl Heart Studs",   category:"Earrings",       badge:null,           img:BASE+"IMG-20260226-WA0017.jpg", desc:"Asymmetric hearts in pearlescent white enamel with a slim gold border. Minimal, modern, and mesmerising — these are the earrings you'll reach for every single day." },
+  { id:7,  name:"White Garden Hoop Earrings",    category:"Earrings",       badge:"New",          img:BASE+"IMG-20260226-WA0018.jpg", desc:"White enamel flowers in full bloom cascade over a gold C-hoop. With pearl centres and crystal accents, these earrings evoke a romantic stroll through a sun-drenched garden." },
+  { id:8,  name:"Lotus Pink Jhumki",             category:"Earrings",       badge:null,           img:BASE+"IMG-20260226-WA0019.jpg", desc:"The sacred lotus flower rendered in vivid pink enamel, crowned atop a grand golden jhumki bell. A celebration of grace and spirituality in every sway." },
+  { id:9,  name:"Golden Lotus Jhumki",           category:"Earrings",       badge:"Festive Pick", img:BASE+"IMG-20260226-WA0020.jpg", desc:"Majestic golden lotus studs holding a filigree jhumki bell. The lotus, symbol of purity and rebirth, makes these earrings a piece of wearable poetry for festive occasions." },
+  { id:10, name:"Ruby Flower Jhumki",            category:"Earrings",       badge:null,           img:BASE+"IMG-20260226-WA0021.jpg", desc:"Deep ruby cabochons form a lush floral stud above an intricately engraved antique gold jhumki. Where heirloom craftsmanship meets timeless splendour." },
+  { id:11, name:"Moon Bloom Hair Pin",           category:"Hair Accessory", badge:"New",          img:BASE+"IMG-20260226-WA0022.jpg", desc:"A crescent moon of pave crystals adorned with soft blush flower petals. This enchanting hair pin is the finishing touch that transforms any look into pure magic." },
+  { id:12, name:"Pearl Bow Drop Earrings",       category:"Earrings",       badge:"Luxury",       img:BASE+"IMG-20260226-WA0023.jpg", desc:"CZ-studded heart posts dangle into golden bow-tied baroque pearl drops. Glamorous and utterly feminine — this is luxury you can wear every day." },
+  { id:13, name:"Chandchakor Oxidised Earrings", category:"Earrings",       badge:null,           img:BASE+"IMG-20260226-WA0024.jpg", desc:"A sun-disc stud cascades into a crescent chandelier and then a small oxidised jhumki. Three-tiered artistry in oxidised silver — a tribute to the moon and sun." },
+  { id:14, name:"Mandala Dome Jhumki",           category:"Earrings",       badge:null,           img:BASE+"IMG-20260226-WA0025.jpg", desc:"A circular mandala stud of intricate dark oxidised silver leads to a beaded dome jhumki. Meditative in design, magnetic in presence." },
+  { id:15, name:"Crimson Sunburst Jhumki",       category:"Earrings",       badge:"Popular",      img:BASE+"IMG-20260226-WA0026.jpg", desc:"A sunburst disc encrusted in red stones pairs with a golden jhumki hung with coral beads. Vibrant, opulent, and made for moments that demand to be remembered." },
+  { id:16, name:"Teardrop Cage Jhumki",          category:"Earrings",       badge:null,           img:BASE+"IMG-20260226-WA0027.jpg", desc:"A teardrop frame of oxidised silver beads opens into a delicate cage jhumki with a white stone centre. Architectural elegance meets tribal soul." },
+  { id:17, name:"Emerald Meenakari Jhumki",      category:"Earrings",       badge:"Heritage",     img:BASE+"IMG-20260226-WA0028.jpg", desc:"Antique gold with emerald green meenakari work, finished with dangling jade beads. A jewel born from the Mughal courts, reimagined for the modern woman." },
+  { id:18, name:"Crystal Triangular Jhumki",     category:"Earrings",       badge:null,           img:BASE+"IMG-20260226-WA0029.jpg", desc:"A filigree triangle adorned with crystals floats above a lattice jhumki with a single silver droplet. Geometric beauty that dances with every step." },
+  { id:19, name:"Hexagon Drop Jhumki",           category:"Earrings",       badge:null,           img:BASE+"IMG-20260226-WA0030.jpg", desc:"Geometric hexagon panels in oxidised silver elongate into a tiny jhumki. For those who find beauty in symmetry and strength in structure." },
+  { id:20, name:"Crimson Meenakari Jhumki",      category:"Earrings",       badge:"Bridal",       img:BASE+"IMG-20260226-WA0031.jpg", desc:"Red meenakari enamel on a filigree triangle stud with polki stones, paired with a matching red lacquered jhumki bell. Heritage craft at its most breathtaking." },
+  { id:21, name:"Cherry Blossom Cage Jhumki",    category:"Earrings",       badge:"New",          img:BASE+"IMG-20260226-WA0032.jpg", desc:"A trailing branch of oxidised silver blossoms tops a fine lattice cage jhumki. Delicate as a first bloom, bold as tradition — a rare union of floral poetry and ancient craft." },
+  { id:22, name:"Antique Opal Floret Jhumki",    category:"Earrings",       badge:null,           img:BASE+"IMG_20260226_075241.jpg", desc:"Iridescent opal stones nestle within an antique gold sunflower stud above a granulated dome jhumki. Each stone catches light like a secret hidden in bronze and moonlight." },
+  { id:23, name:"Diamond-Cut Crystal Jhumki",    category:"Earrings",       badge:"Trending",     img:BASE+"IMG_20260226_075259.jpg", desc:"A geometric diamond-shaped stud studded with CZ clusters suspends a dramatic jhumki with marquise crystal petals. Bold. Architectural. Unforgettable." },
+  { id:24, name:"Noir Bloom Drop Earrings",      category:"Earrings",       badge:"New",          img:BASE+"IMG_20260226_075313.jpg", desc:"Sleek obsidian-toned flower petals hang from a rose gold hoop with a trailing crystal stem drop. Mysterious and modern — for the woman who finds beauty in shadows." },
+  { id:25, name:"Frosted Petal Hoop Earrings",   category:"Earrings",       badge:"Popular",      img:BASE+"IMG_20260226_075333.jpg", desc:"Translucent frosted white petals bloom on a delicate gold wire hoop, finished with a champagne crystal drop. Soft as morning mist, luminous as pearls in winter light." },
+  { id:26, name:"Scarlet Bloom Hoop Earrings",   category:"Earrings",       badge:null,           img:BASE+"IMG_20260226_075412.jpg", desc:"Vivid scarlet petals in lacquered resin radiate from a crystal centre, suspended on a sleek gold hoop. Passion rendered in jewelry — for the bold and the beautiful." },
+  { id:27, name:"Infinity Circle Bracelet",      category:"Bracelet",       badge:"Bestseller",   img:BASE+"IMG_20260226_075447.jpg", desc:"Interlocking rose gold circles — some solid, some crystal-encrusted — form an endlessly elegant bracelet. A symbol of infinity for a bond that never fades." },
+  { id:28, name:"Butterfly Garden Bracelet",     category:"Bracelet",       badge:"New",          img:BASE+"IMG_20260226_075758.jpg", desc:"Rose gold butterflies flutter around a blush opal daisy centrepiece, all catching light with every movement. Wear a garden on your wrist. Wear Mavelle." },
+  { id:29, name:"Pastel Wreath Hair Pin",        category:"Hair Accessory", badge:"New",          img:BASE+"IMG_20260226_075822.jpg", desc:"A perfect circle of pale pink and sky blue crystal flowers, each centred with a pearl, forming a dreamy floral wreath hair pin. The finishing touch every look deserves." },
+  { id:30, name:"Crystal Heart Bloom Hair Pin",  category:"Hair Accessory", badge:null,           img:BASE+"IMG_20260226_080723.jpg", desc:"A crystal-paved open heart frames blush and mint flowers with pearl accents. This ethereal hair pin is where romance meets refinement — bridal and beyond." },
+  { id:31, name:"Aurora Daisy Hair Clip",        category:"Hair Accessory", badge:"Trending",     img:BASE+"IMG_20260226_080824.jpg", desc:"A full-bloom daisy in translucent peach and sky petals with a coral resin centre sits on a pave clip. Effortlessly chic — from day to evening, one clip changes everything." },
+  { id:32, name:"Crescent Moon Flower Pin",      category:"Hair Accessory", badge:null,           img:BASE+"IMG_20260226_080922.jpg", desc:"Three blush roses rest upon a crescent moon of glittering pave crystals. Celestial, romantic, timeless — this pin is a poem you wear in your hair." },
+];
+
+let currentProduct = null;
+
+function renderProducts(filterCat = 'all') {
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML = '';
+  const list = filterCat === 'all' ? products : products.filter(p => p.category === filterCat);
+  list.forEach((p, i) => {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.id = 'product-' + p.id;
+    card.style.animationDelay = (i * 0.05) + 's';
+    card.innerHTML = `
+      <div class="product-img-wrap">
+        <img src="${p.img}" alt="${p.name}" loading="lazy">
+        <div class="product-overlay">
+          <button class="overlay-btn" onclick="openModal(${p.id})">View Details</button>
+        </div>
+        ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
+      </div>
+      <div class="product-info">
+        <p class="product-category">${p.category}</p>
+        <h3 class="product-name">${p.name}</h3>
+        <p class="product-desc">${p.desc.slice(0,90)}…</p>
+        <div class="product-footer">
+          <span class="product-price">Enquire Now</span>
+          <button class="product-share-btn" onclick="openModal(${p.id})">
+            <svg class="share-icon" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            Share
+          </button>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function filterProducts(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts(cat);
+}
+
+function openModal(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  currentProduct = p;
+  document.getElementById('modalImg').src = p.img;
+  document.getElementById('modalImg').alt = p.name;
+  document.getElementById('modalCategory').textContent = '✦ ' + p.category;
+  document.getElementById('modalTitle').textContent = p.name;
+  document.getElementById('modalDesc').textContent = p.desc;
+  document.getElementById('shareLinkInput').value = window.location.origin + window.location.pathname + '#product-' + p.id;
+  document.getElementById('modalOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('copyBtn').textContent = 'Copy Link';
+  document.getElementById('copyBtn').classList.remove('copied');
+}
+
+function closeModal(e) { if (e.target === document.getElementById('modalOverlay')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modalOverlay').classList.remove('active'); document.body.style.overflow = ''; }
+
+function copyLink() {
+  const val = document.getElementById('shareLinkInput').value;
+  navigator.clipboard.writeText(val).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = 'Copied!'; btn.classList.add('copied');
+    showToast('Link copied!');
+    setTimeout(() => { btn.textContent = 'Copy Link'; btn.classList.remove('copied'); }, 3000);
+  }).catch(() => { document.getElementById('shareLinkInput').select(); document.execCommand('copy'); showToast('Link copied!'); });
+}
+
+function shareVia(p) {
+  const url = document.getElementById('shareLinkInput').value;
+  const text = currentProduct ? `Check out "${currentProduct.name}" from Mavelle Jewels! ✨` : 'Check out Mavelle Jewels!';
+  if (p === 'whatsapp') window.open(`https://wa.me/?text=${encodeURIComponent(text+' '+url)}`, '_blank');
+  else if (p === 'telegram') window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, '_blank');
+  else if (p === 'email') window.open(`mailto:?subject=${encodeURIComponent('Mavelle Jewels')}&body=${encodeURIComponent(text+'\n\n'+url)}`);
+  else if (p === 'native') { if (navigator.share) navigator.share({title:currentProduct?.name,text,url}).catch(()=>{}); else copyLink(); }
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  renderProducts();
+  const hash = window.location.hash;
+  if (hash && hash.startsWith('#product-')) {
+    const id = parseInt(hash.replace('#product-', ''));
+    if (!isNaN(id)) setTimeout(() => openModal(id), 700);
+  }
+});
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
+</script>
+</body>
+</html>
